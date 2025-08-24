@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->foreignId('brand_id')->constrained('car_brands');
-            $table->unique(['brand_id', 'title'], 'title_uq');
+            $table->index(['title', 'brand_id'], 'title_uq')->unique();
             $table->timestamps();
         });
     }
