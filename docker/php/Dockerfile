@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.3-fpm
 
 # Устанавливаем системные зависимости
 RUN apt-get update && apt-get install -y \
@@ -26,16 +26,16 @@ RUN groupadd -g 1000 appuser && \
     useradd -u 1000 -g appuser -m appuser
 
 # Создаем рабочую директорию
-WORKDIR /var/www/html
+WORKDIR /app
 
 # Копируем composer файлы для оптимизации слоев
-COPY --chown=appuser:appuser backend/composer.json backend/composer.lock ./
+COPY --chown=appuser:appuser src/api/composer.json src/api/composer.lock ./
 
 # Устанавливаем зависимости PHP (без post-install скриптов)
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Копируем исходный код приложения
-COPY --chown=appuser:appuser backend .
+COPY --chown=appuser:appuser src/api .
 
 # Создаем необходимые директории и устанавливаем права
 RUN mkdir -p storage/logs \

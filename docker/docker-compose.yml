@@ -17,7 +17,7 @@ services:
     networks:
       - webapp
   php:
-    image: bitnami/php-fpm:8.1
+    image: bitnami/php-fpm:8.3
     container_name: ${APP_NAME}-api
     volumes:
       - "./../src/api:/app"
